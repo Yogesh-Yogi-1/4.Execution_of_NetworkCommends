@@ -24,9 +24,47 @@ This commands includes
 • IP Commands
 <BR>
 • Other IP Commands e.g. show ip route etc.
-<BR>
+<BR> 
 
+## PROGRAM
+## CLIENT
+```
+import socket 
+from pythonping import ping 
+s=socket.socket() 
+s.bind(('localhost',8000)) 
+s.listen(5) 
+c,addr=s.accept() 
+while True: 
+    hostname=c.recv(1024).decode() 
+    try: 
+        c.send(str(ping(hostname, verbose=False)).encode()) 
+    except KeyError: 
+        c.send("Not Found".encode())
+```
+## SERVER
+```
+import socket 
+s=socket.socket() 
+s.connect(('localhost',8000)) 
+while True: 
+    ip=input("Enter the website you want to ping ") 
+    s.send(ip.encode()) 
+    print(s.recv(1024).decode())
+```
+## TRACERT
+```
+from scapy.all import* 
+target = ["www.google.com"] 
+result, unans = traceroute(target,maxttl=32) 
+print(result,unans)
+```
 ## Output
-
+## CLIENT
+![Screenshot 2024-05-15 224421](https://github.com/Yogesh-Yogi-1/4.Execution_of_NetworkCommends/assets/148514598/5d99a6ce-81cc-4cac-be6d-5435fd1aef8b)
+## SERVER
+![Screenshot 2024-05-15 224448](https://github.com/Yogesh-Yogi-1/4.Execution_of_NetworkCommends/assets/148514598/e63d953b-2744-48d5-bf19-caff13f8895f)
+## TRACERT
+![Screenshot 2024-05-15 224513](https://github.com/Yogesh-Yogi-1/4.Execution_of_NetworkCommends/assets/148514598/dc858e1b-2a37-4728-b1f4-826d71d3f9b7)
 ## Result
 Thus Execution of Network commands Performed 
